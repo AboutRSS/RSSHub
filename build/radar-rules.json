@@ -4362,6 +4362,20 @@
       }
     ]
   },
+  "metro.tokyo.jp": {
+    "_name": "Toei Transportation",
+    "www.kotsu": [
+      {
+        "title": "都営地下鉄 各駅乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/subway/kanren/passengers.html",
+          "/dataset/t000018d0000000030"
+        ],
+        "target": "/toei/ridership"
+      }
+    ]
+  },
   "topbook.cc": {
     "_name": "Topbook",
     ".": [
@@ -5649,6 +5663,27 @@
           "/portal/exhibition"
         ],
         "target": "/wuzhongmuseum/exhibition"
+      }
+    ]
+  },
+  "yinxubwg.cn": {
+    "_name": "Yinxu Museum",
+    "www": [
+      {
+        "title": "Notice",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/yxgw/notice"
+        ],
+        "target": "/yinxubwg/notice"
+      },
+      {
+        "title": "Exhibition Information",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/yxgw/exhibitionIndex"
+        ],
+        "target": "/yinxubwg/exhibitionIndex/:type"
       }
     ]
   },
@@ -9633,6 +9668,29 @@
       }
     ]
   },
+  "abc-tenpo.com": {
+    "_name": "ABC Tenpo",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/property/search",
+          "/feature/new_arrival",
+          "/"
+        ],
+        "target": "/abc-tenpo/property"
+      },
+      {
+        "title": "エリア別賃料相場",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/feature/rent"
+        ],
+        "target": "/abc-tenpo/rent-benchmark"
+      }
+    ]
+  },
   "ahhhhfs.com": {
     "_name": "A 姐分享",
     ".": [
@@ -9763,6 +9821,14 @@
   "acfun.cn": {
     "_name": "AcFun",
     "www": [
+      {
+        "title": "用户文章",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/u/:id"
+        ],
+        "target": "/acfun/user/article/:id"
+      },
       {
         "title": "用户投稿",
         "docs": "https://docs.rsshub.app/routes/anime",
@@ -14075,6 +14141,20 @@
           "/611/main.htm"
         ],
         "target": "/buct/jwc"
+      }
+    ]
+  },
+  "bukenavi.jp": {
+    "_name": "Bukenavi",
+    ".": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:region/object/list",
+          "/:region"
+        ],
+        "target": "/bukenavi/object/:region"
       }
     ]
   },
@@ -25612,6 +25692,36 @@
       }
     ]
   },
+  "inshokuten.com": {
+    "_name": "Inshokuten.com",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/:region/bukkens/list",
+          "/bukken/:region/bukkens/list/local-:area"
+        ],
+        "target": "/inshokutenparams=>`/bukken/${params.area??params.region}`"
+      },
+      {
+        "title": "賃料相場",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/kanto/market/rent/line/:area"
+        ],
+        "target": "/inshokuten/rent-benchmark/:area"
+      },
+      {
+        "title": "賃料相場",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/kanto/market/rent/station/:line"
+        ],
+        "target": "/inshokuten/rent-benchmark/23ward/:line"
+      }
+    ]
+  },
   "instructables.com": {
     "_name": "Instructables",
     ".": [
@@ -25622,6 +25732,20 @@
           "/projects"
         ],
         "target": "/instructables/projects"
+      }
+    ]
+  },
+  "inuki-ichiba.jp": {
+    "_name": "Inuki Ichiba",
+    ".": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/sp_rent/1",
+          "/"
+        ],
+        "target": "/inuki-ichiba/rent"
       }
     ]
   },
@@ -25912,6 +26036,20 @@
           "/category/news/sim-racing-news"
         ],
         "target": "/iracing/news"
+      }
+    ]
+  },
+  "iri-search.net": {
+    "_name": "iri-search",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/estate_search",
+          "/"
+        ],
+        "target": "/iri-search/estate"
       }
     ]
   },
@@ -26235,6 +26373,19 @@
           "/tag_report/report"
         ],
         "target": "/jbma/report/tag_report/report"
+      }
+    ]
+  },
+  "jfnet.or.jp": {
+    "_name": "Japan Foodservice Association",
+    "www": [
+      {
+        "title": "外食産業市場動向調査（月次）",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/industry_report"
+        ],
+        "target": "/jfnet/industry-report"
       }
     ]
   },
@@ -26590,6 +26741,20 @@
       }
     ]
   },
+  "jreast.co.jp": {
+    "_name": "JR East",
+    "www": [
+      {
+        "title": "各駅の乗車人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/company/data/passenger/",
+          "/passenger/"
+        ],
+        "target": "/jreast/ridership"
+      }
+    ]
+  },
   "jseea.cn": {
     "_name": "江苏省教育考试院",
     ".": [
@@ -26691,6 +26856,19 @@
           "/:lang/article/list/:category"
         ],
         "target": "/kcna/:lang/:category"
+      }
+    ]
+  },
+  "keio.co.jp": {
+    "_name": "Keio Corporation",
+    "www": [
+      {
+        "title": "駅別 一日平均乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/company/corporate/corporate_manual/number-of-passengers.html"
+        ],
+        "target": "/keio/ridership"
       }
     ]
   },
@@ -33189,6 +33367,19 @@
       }
     ]
   },
+  "odakyu.jp": {
+    "_name": "Odakyu Electric Railway",
+    "www": [
+      {
+        "title": "駅別乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/company/railroad/users/"
+        ],
+        "target": "/odakyu/ridership"
+      }
+    ]
+  },
   "okx.com": {
     "_name": "欧易 OKX",
     "www": [
@@ -39309,6 +39500,20 @@
       }
     ]
   },
+  "sonomama.net": {
+    "_name": "Sonomama",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/app/",
+          "/"
+        ],
+        "target": "/sonomama/property"
+      }
+    ]
+  },
   "sony.com": {
     "_name": "Sony",
     ".": [
@@ -41173,6 +41378,61 @@
       }
     ]
   },
+  "temponw.com": {
+    "_name": "Temponw",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/result",
+          "/"
+        ],
+        "target": "/temponw/estates"
+      }
+    ]
+  },
+  "temposmart.jp": {
+    "_name": "Temposmart",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/estates/pref/:pref"
+        ],
+        "target": "/temposmart/estates/:pref"
+      }
+    ]
+  },
+  "tenant-shop.com": {
+    "_name": "Tenant Shop Network",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/chintai_biz/pa-:pa/shin-1",
+          "/chintai_biz/pa-:pa"
+        ],
+        "target": "/tenant-shop/chintai/:pa"
+      }
+    ]
+  },
+  "tenant-shop.jp": {
+    "_name": "Tenant Shop Network",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/chintai_biz/pa-:pa/shin-1",
+          "/chintai_biz/pa-:pa"
+        ],
+        "target": "/tenant-shop/chintai/:pa"
+      }
+    ]
+  },
   "tencent.com": {
     "_name": "腾讯",
     "cloud": [
@@ -41841,6 +42101,33 @@
           "/:lang/report"
         ],
         "target": "/tokeninsight/report/:lang"
+      }
+    ]
+  },
+  "tokyometro.jp": {
+    "_name": "Tokyo Metro",
+    "www": [
+      {
+        "title": "各駅の乗降人員ランキング",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/corporate/enterprise/passenger_rail/transportation/passengers/:page"
+        ],
+        "target": "/tokyometro/ridership"
+      }
+    ]
+  },
+  "tokyu.co.jp": {
+    "_name": "Tokyu Railways",
+    "www": [
+      {
+        "title": "駅別乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/railway/company/business/passengers/:year",
+          "/railway/company/business/passengers/"
+        ],
+        "target": "/tokyu/ridership/:year"
       }
     ]
   },

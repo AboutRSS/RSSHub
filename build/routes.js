@@ -15542,6 +15542,49 @@ export default {
     "url": "www.tkww.hk",
     "lang": "zh-HK"
   },
+  "toei": {
+    "routes": {
+      "/ridership": {
+        "path": "/ridership",
+        "name": "都営地下鉄 各駅乗降人員",
+        "url": "www.kotsu.metro.tokyo.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/toei/ridership",
+        "parameters": {},
+        "description": "Annual 各駅乗降人員 (one-day average of boarding + alighting passengers) for every 都営地下鉄 station, read from the Tokyo open-data catalog dataset [地下鉄関連情報 各駅乗降人員一覧](https://catalog.data.metro.tokyo.lg.jp/dataset/t000018d0000000030) (CC BY 4.0, one Shift_JIS CSV per line) — the operator's own [各駅乗降人員一覧](https://www.kotsu.metro.tokyo.jp/subway/kanren/passengers.html) page carries the same figures behind a browser challenge. One item per station and line (stations shared by two lines appear once per line with that line's figures); `_extra` follows the shared ridership shape with `daily_average` = 乗車 + 降車 and `measure: 'boarding_alighting'`. Only the current fiscal year is published and the files are overwritten in place; `pubDate` is the resource's last-modified date. Credit: 地下鉄関連情報 各駅乗降人員一覧、東京都・東京都交通局、CC BY 4.0.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.kotsu.metro.tokyo.jp/subway/kanren/passengers.html",
+              "catalog.data.metro.tokyo.lg.jp/dataset/t000018d0000000030"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/toei/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Toei Transportation",
+    "url": "www.kotsu.metro.tokyo.jp",
+    "description": "東京都交通局（都営地下鉄・都営バス・都電）",
+    "lang": "ja",
+    "ja": {
+      "name": "東京都交通局"
+    }
+  },
   "topbook": {
     "routes": {
       "/:id?": {
@@ -21456,6 +21499,61 @@ export default {
     "name": "新快报",
     "url": "xkb.com.cn",
     "lang": "zh-CN"
+  },
+  "yinxubwg": {
+    "routes": {
+      "/notice": {
+        "path": "/notice",
+        "categories": [
+          "travel"
+        ],
+        "example": "/yinxubwg/notice",
+        "name": "Notice",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.yinxubwg.cn/yxgw/notice"
+            ],
+            "target": "/notice"
+          }
+        ],
+        "location": "notice.ts",
+        "module": () => import('@/routes/yinxubwg/notice.ts')
+      },
+      "/exhibitionIndex/:type": {
+        "path": "/exhibitionIndex/:type",
+        "categories": [
+          "travel"
+        ],
+        "example": "/yinxubwg/exhibitionIndex/2",
+        "parameters": {
+          "type": "Exhibition type. Supported values: `1` (Permanent Exhibition), `2` (Temporary Exhibition), `3` (Past Exhibitions)."
+        },
+        "name": "Exhibition Information",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.yinxubwg.cn/yxgw/exhibitionIndex"
+            ],
+            "target": "/exhibitionIndex/:type"
+          }
+        ],
+        "location": "exhibition.tsx",
+        "module": () => import('@/routes/yinxubwg/exhibition.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Yinxu Museum",
+    "url": "www.yinxubwg.cn",
+    "zh": {
+      "name": "殷墟博物馆"
+    }
   },
   "yoasobi-music": {
     "routes": {
@@ -31488,6 +31586,113 @@ export default {
     "url": "abc.net.au",
     "lang": "en"
   },
+  "abc-tenpo": {
+    "routes": {
+      "/property/:pref?": {
+        "path": "/property/:pref?",
+        "name": "新着物件",
+        "url": "www.abc-tenpo.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/abc-tenpo/property/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "Prefecture slug or JIS X 0401 code; omit for all of 東京・神奈川・千葉・埼玉",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (13)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (14)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (11)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (12)"
+              }
+            ]
+          }
+        },
+        "description": "Listings on ABC 店舗 sorted by 新着順 (first page, 20 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，階，最寄駅，引渡状態，現業態，業種制限，飲食条件，情報更新日，…) parsed from the list and detail pages; unknown values are `null`. 保証金，礼金 and 造作譲渡料 are members-only on the site and therefore always `null`; the item date is the site's 情報更新日.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 20 | 20      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.abc-tenpo.com/property/search",
+              "www.abc-tenpo.com/feature/new_arrival",
+              "www.abc-tenpo.com/"
+            ],
+            "target": "/property"
+          }
+        ],
+        "location": "property.ts",
+        "module": () => import('@/routes/abc-tenpo/property.ts')
+      },
+      "/rent-benchmark/:pref?": {
+        "path": "/rent-benchmark/:pref?",
+        "name": "エリア別賃料相場",
+        "url": "www.abc-tenpo.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/abc-tenpo/rent-benchmark/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "Prefecture slug; the site currently publishes 東京23区 only",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都"
+              }
+            ]
+          }
+        },
+        "description": "Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京 23 区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in `_extra.rent_per_tsubo_jpy` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低，sample count, period and 更新日 are not published and stay `null`. The page is cached for one day.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.abc-tenpo.com/feature/rent"
+            ],
+            "target": "/rent-benchmark"
+          }
+        ],
+        "location": "rent-benchmark.ts",
+        "module": () => import('@/routes/abc-tenpo/rent-benchmark.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "ABC Tenpo",
+    "url": "www.abc-tenpo.com",
+    "description": "ABC 店舗 — 飲食店向け居抜き・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "ABC店舗"
+    }
+  },
   "abskoop": {
     "routes": {
       "/nsfw": {
@@ -31823,6 +32028,31 @@ export default {
         "description": "| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |\n| ---------- | ---- | -------- | ---- | -------- | -------- |\n| 184        | 110  | 73       | 164  | 74       | 75       |\n\n| 最新发表   | 最新动态        | 最热文章 |\n| ---------- | --------------- | -------- |\n| createTime | lastCommentTime | hotScore |\n\n| 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |\n| -------- | ------- | -------- | ------- | -------- |\n| all      | oneDay  | threeDay | oneWeek | oneMonth |",
         "location": "article.ts",
         "module": () => import('@/routes/acfun/article.ts')
+      },
+      "/user/article/:uid": {
+        "path": "/user/article/:uid",
+        "radar": [
+          {
+            "source": [
+              "www.acfun.cn/u/:id"
+            ],
+            "target": "/user/article/:id"
+          }
+        ],
+        "name": "用户文章",
+        "parameters": {
+          "uid": "用户 UID"
+        },
+        "categories": [
+          "anime"
+        ],
+        "example": "/acfun/user/article/1384329",
+        "view": 0,
+        "maintainers": [
+          "tiaod"
+        ],
+        "location": "user-article.ts",
+        "module": () => import('@/routes/acfun/user-article.ts')
       },
       "/user/video/:uid/:embed?": {
         "path": "/user/video/:uid/:embed?",
@@ -42243,6 +42473,69 @@ export default {
       "description": "各组织自建的 Bugzilla 实例。"
     },
     "lang": "en"
+  },
+  "bukenavi": {
+    "routes": {
+      "/object/:region?/:pref?": {
+        "path": "/object/:region?/:pref?",
+        "name": "新着物件",
+        "url": "bukenavi.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/bukenavi/object/kanto/tokyo",
+        "parameters": {
+          "region": {
+            "description": "Region",
+            "default": "kanto",
+            "options": [
+              {
+                "value": "kanto",
+                "label": "関東"
+              },
+              {
+                "value": "kansai",
+                "label": "関西"
+              },
+              {
+                "value": "tokai",
+                "label": "東海"
+              }
+            ]
+          },
+          "pref": "Prefecture slug (tokyo, kanagawa, saitama, chiba, osaka, kyoto, hyogo, aichi) or two-digit JIS X 0401 code; omit for the whole region"
+        },
+        "description": "New 居抜き listings on ぶけなび that are currently 募集中，newest first (first page, 10 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，前業態，業種制限，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "bukenavi.jp/:region/object/list",
+              "bukenavi.jp/:region"
+            ],
+            "target": "/object/:region"
+          }
+        ],
+        "location": "object.ts",
+        "module": () => import('@/routes/bukenavi/object.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Bukenavi",
+    "url": "bukenavi.jp",
+    "description": "ぶけなび — 飲食店の居抜き物件専門サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "ぶけなび"
+    }
   },
   "bulianglin": {
     "routes": {
@@ -56871,6 +57164,14 @@ export default {
           "junfengP",
           "pseudoyu"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Allow user supplied domain"
+            }
+          ]
+        },
         "description": "| Discuz X Series | Discuz 7.x Series |\n| --------------- | ----------------- |\n| x               | 7                 |",
         "location": "discuz.ts",
         "module": () => import('@/routes/discuz/discuz.ts')
@@ -56895,6 +57196,14 @@ export default {
           "junfengP",
           "pseudoyu"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Allow user supplied domain"
+            }
+          ]
+        },
         "description": "| Discuz X Series | Discuz 7.x Series |\n| --------------- | ----------------- |\n| x               | 7                 |",
         "location": "discuz.ts",
         "module": () => import('@/routes/discuz/discuz.ts')
@@ -56919,6 +57228,14 @@ export default {
           "junfengP",
           "pseudoyu"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Allow user supplied domain"
+            }
+          ]
+        },
         "description": "| Discuz X Series | Discuz 7.x Series |\n| --------------- | ----------------- |\n| x               | 7                 |",
         "location": "discuz.ts",
         "module": () => import('@/routes/discuz/discuz.ts')
@@ -73826,6 +74143,157 @@ export default {
     "url": "inoreader.com",
     "lang": "en"
   },
+  "inshokuten": {
+    "routes": {
+      "/bukken/:area?": {
+        "path": "/bukken/:area?",
+        "name": "新着物件",
+        "url": "www.inshokuten.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/inshokuten/bukken/23ward",
+        "parameters": {
+          "area": {
+            "description": "Region or 首都圏 sub-area",
+            "default": "kanto",
+            "options": [
+              {
+                "value": "kanto",
+                "label": "首都圏"
+              },
+              {
+                "value": "23ward",
+                "label": "東京23区"
+              },
+              {
+                "value": "23ward_out",
+                "label": "東京都下"
+              },
+              {
+                "value": "yokohama_kawasaki",
+                "label": "神奈川"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉"
+              },
+              {
+                "value": "kansai",
+                "label": "関西"
+              },
+              {
+                "value": "tokai",
+                "label": "東海"
+              },
+              {
+                "value": "kyushu",
+                "label": "九州"
+              }
+            ]
+          }
+        },
+        "description": "New restaurant-property listings on 飲食店.COM sorted by 登録日 (first page, 20 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，造作譲渡料，現況，前業態，出店可能業態，登録日，…); unknown values are `null`. 保証金 and 礼金 are members-only on the site and therefore always `null`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.inshokuten.com/bukken/:region/bukkens/list",
+              "www.inshokuten.com/bukken/:region/bukkens/list/local-:area"
+            ]
+          }
+        ],
+        "location": "bukken.ts",
+        "module": () => import('@/routes/inshokuten/bukken.ts')
+      },
+      "/rent-benchmark/:area?/:line?": {
+        "path": "/rent-benchmark/:area?/:line?",
+        "name": "賃料相場",
+        "url": "www.inshokuten.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/inshokuten/rent-benchmark/23ward",
+        "parameters": {
+          "area": {
+            "description": "首都圏 sub-area",
+            "default": "23ward",
+            "options": [
+              {
+                "value": "23ward",
+                "label": "東京23区"
+              },
+              {
+                "value": "23ward_out",
+                "label": "東京都下"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉"
+              },
+              {
+                "value": "yokohama_kawasaki",
+                "label": "神奈川"
+              }
+            ]
+          },
+          "line": {
+            "description": "Line id from the area page (`/bukken/kanto/market/rent/line/{area}`, e.g. `2` = JR山手線 in 東京23区); when given, one item per station on that line instead of one per 市区町村"
+          }
+        },
+        "description": "Restaurant-property rent benchmarks (坪単価，消費税込み募集金額，直近 1 年間) published by 飲食店.COM. Without `line` the feed has one item per 市区町村 of the area; with `line` one item per station on that line. Each item's `_extra` carries `rent_per_tsubo_avg_jpy` / `_min_jpy` / `_max_jpy` (円 / 坪 / 月), `sample_count` (sum of the 賃料分布図 buckets), `period` and the raw site text; the site publishes no 中央値 and no 更新日，so `rent_per_tsubo_median_jpy` is always `null` and items carry no `pubDate`. Detail pages are cached for one day.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.inshokuten.com/bukken/kanto/market/rent/line/:area"
+            ],
+            "target": "/rent-benchmark/:area"
+          },
+          {
+            "source": [
+              "www.inshokuten.com/bukken/kanto/market/rent/station/:line"
+            ],
+            "target": "/rent-benchmark/23ward/:line"
+          }
+        ],
+        "location": "rent-benchmark.ts",
+        "module": () => import('@/routes/inshokuten/rent-benchmark.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Inshokuten.com",
+    "url": "www.inshokuten.com",
+    "description": "飲食店.COM — 飲食店向け居抜き・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "飲食店.COM"
+    }
+  },
   "instructables": {
     "routes": {
       "/projects/:category?": {
@@ -73867,6 +74335,71 @@ export default {
     "name": "Instructables",
     "url": "instructables.com",
     "lang": "en"
+  },
+  "inuki-ichiba": {
+    "routes": {
+      "/rent/:pref?": {
+        "path": "/rent/:pref?",
+        "name": "新着物件",
+        "url": "inuki-ichiba.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/inuki-ichiba/rent/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug or JIS X 0401 code; omit for the site-wide 新着物件 page (一都三県 mixed)",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (13)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (14)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (11)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (12)"
+              }
+            ]
+          }
+        },
+        "description": "New listings on 居抜き市場，20 per page (first page only). With a prefecture the search results are sorted by 新着順；without one the site's 新着物件 page is used. Each item's `_extra` carries the structured listing fields (賃料，坪，階，最寄駅，敷金・保証金，造作価格，物件タイプ，現業態，飲食条件，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 20 | 20      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "inuki-ichiba.jp/sp_rent/1",
+              "inuki-ichiba.jp/"
+            ],
+            "target": "/rent"
+          }
+        ],
+        "location": "rent.ts",
+        "module": () => import('@/routes/inuki-ichiba/rent.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Inuki Ichiba",
+    "url": "inuki-ichiba.jp",
+    "description": "居抜き市場 — 一都三県の居抜き店舗・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "居抜き市場"
+    }
   },
   "investor": {
     "routes": {
@@ -74552,6 +75085,51 @@ export default {
     "name": "iRacing",
     "url": "iracing.com",
     "description": ""
+  },
+  "iri-search": {
+    "routes": {
+      "/estate/:area?": {
+        "path": "/estate/:area?",
+        "name": "新着物件",
+        "url": "www.iri-search.net",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/iri-search/estate/tokyo",
+        "parameters": {
+          "area": "Region slug (shutoken, hokkaido, tohoku, kitakanto, hokuriku, koshinetsu, tokai, kinki, chugoku, shikoku, kyushu, okinawa) or a 首都圏 prefecture (tokyo, kanagawa, saitama, chiba or its JIS code); omit for nationwide"
+        },
+        "description": "New listings on 居抜き物件検索 iri-search sorted by 新着順 (first page, 30 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金・敷金，居抜き譲渡代，以前の業態，業種可否，掲載日，…) parsed from the list and detail pages; unknown values are `null`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 30 | 30      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.iri-search.net/estate_search",
+              "www.iri-search.net/"
+            ],
+            "target": "/estate"
+          }
+        ],
+        "location": "estate.ts",
+        "module": () => import('@/routes/iri-search/estate.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "iri-search",
+    "url": "www.iri-search.net",
+    "description": "居抜き物件検索 iri-search — 全国の貸店舗・居抜き物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "居抜き物件検索 iri-search"
+    }
   },
   "itc": {
     "routes": {
@@ -75470,6 +76048,48 @@ export default {
     "zh": {
       "name": "日本贵金属市场协会",
       "description": ""
+    }
+  },
+  "jfnet": {
+    "routes": {
+      "/industry-report": {
+        "path": "/industry-report",
+        "name": "外食産業市場動向調査（月次）",
+        "url": "www.jfnet.or.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/jfnet/industry-report",
+        "parameters": {},
+        "description": "Monthly releases of the 外食産業市場動向調査 from [業界データ](https://www.jfnet.or.jp/industry_report/). One item per survey month linking the PDF and Excel files; `_extra` carries `month` (YYYY-MM), `pdf`, `xls` and `released_at` (the file's upload date from the site's WordPress media API). The segment figures (売上高・客数・客単価 前年同月比) are only published inside the files and are not extracted: the site's 利用規約 reserves reproduction of its 資料 to prior permission.",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jfnet.or.jp/industry_report"
+            ],
+            "target": "/industry-report"
+          }
+        ],
+        "location": "industry-report.ts",
+        "module": () => import('@/routes/jfnet/industry-report.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Japan Foodservice Association",
+    "url": "www.jfnet.or.jp",
+    "description": "一般社団法人日本フードサービス協会",
+    "lang": "ja",
+    "ja": {
+      "name": "日本フードサービス協会"
     }
   },
   "jgsu": {
@@ -76722,6 +77342,53 @@ export default {
     "url": "www.jpxgmn.com",
     "lang": "zh-CN"
   },
+  "jreast": {
+    "routes": {
+      "/ridership/:year?": {
+        "path": "/ridership/:year?",
+        "name": "各駅の乗車人員",
+        "url": "www.jreast.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/jreast/ridership",
+        "parameters": {
+          "year": {
+            "description": "Fiscal year (`2019` … latest); omit for the latest year"
+          }
+        },
+        "description": "Annual 各駅の乗車人員 (one-day average of boarding passengers) for every JR東日本 station, from [各駅の乗車人員](https://www.jreast.co.jp/company/data/passenger/) (ベスト100 plus the 101位以下 pages). One item per station and fiscal year; `_extra` follows the shared ridership shape with `measure: 'boarding'` — JR東日本 counts 乗車 only, so the figures are not comparable with the 乗降 figures of other operators. `yoy_pct` is normalised to a % change (the site prints a ratio such as 102.5 from FY2023 on). The operator does not publish a release date, so items have no `pubDate`.\n\n::: warning\nThe site's [ご利用にあたって](https://www.jreast.co.jp/site/rules.html) states: 「当サイト上に掲載されている全ての写真、社名ロゴ、画像、文章等のデータ等の利用については、複製・転用・転載・電磁的加工・送信・頒布・二次的使用・その他これらに類する全ての行為も含め、一切お断りいたします。」 Use the figures accordingly.\n:::",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jreast.co.jp/company/data/passenger/",
+              "www.jreast.co.jp/passenger/"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/jreast/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "JR East",
+    "url": "www.jreast.co.jp",
+    "description": "東日本旅客鉄道",
+    "lang": "ja",
+    "ja": {
+      "name": "JR東日本"
+    }
+  },
   "jrj": {
     "routes": {
       "/:channelNum": {
@@ -77473,6 +78140,48 @@ export default {
     "name": "KeePass",
     "url": "keepass.info",
     "lang": "en"
+  },
+  "keio": {
+    "routes": {
+      "/ridership": {
+        "path": "/ridership",
+        "name": "駅別 一日平均乗降人員",
+        "url": "www.keio.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/keio/ridership",
+        "parameters": {},
+        "description": "Annual 駅別 一日平均乗降人員 for every Keio station (京王線 incl. 相模原線・高尾線 etc., and 井の頭線), from [駅別 一日平均乗降人員](https://www.keio.co.jp/company/corporate/corporate_manual/number-of-passengers.html). The page lists the latest fiscal year and the one before it side by side, so there is one item per station and year (two per station); there is no year parameter. `_extra` carries `operator`, `station`, `line`, `fiscal_year`, `daily_average` (人/日) and both cells in `raw`. `rank` is `null` (no ranking is printed); `yoy_pct` is computed from the two year columns for the latest year (rounded to 0.1) and `null` for the earlier one. 明大前's （乗換） transfer count is kept in `raw.note`; the 全線計 row is not a station and is skipped. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.keio.co.jp/company/corporate/corporate_manual/number-of-passengers.html"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/keio/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Keio Corporation",
+    "url": "www.keio.co.jp",
+    "description": "京王電鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "京王電鉄"
+    }
   },
   "kelownacapnews": {
     "routes": {
@@ -79437,6 +80146,94 @@ export default {
       "social-media"
     ],
     "lang": "en"
+  },
+  "lg": {
+    "routes": {
+      "/osaka/food-permit": {
+        "path": "/osaka/food-permit",
+        "name": "大阪市 食品営業許可 新規",
+        "url": "www.city.osaka.lg.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/lg/osaka/food-permit",
+        "description": "Newest food business permits (食品営業許可) in 大阪市，from the CC BY 4.0 [食品営業許可施設一覧 CSV](https://www.city.osaka.lg.jp/kenko/page/0000575579.html) — a quarterly snapshot of all valid permits with 緯度経度.\n\nThe dataset has no permit date, only 許可満了日，so items have no `pubDate`; they are ordered by 指令番号 (`大 保食第<年度>-<連番>号`), newest first, and only 申請区分 = 新規 rows are included. `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date` (always `null`), `business_type`, `lat`, `lon` and the publisher's original columns in `raw`.\n\n| Query   | Description                | Default |\n| ------- | -------------------------- | ------- |\n| `limit` | Number of permits, max 500 | 100     |",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false
+        },
+        "location": "osaka/food-permit.ts",
+        "module": () => import('@/routes/lg/osaka/food-permit.ts')
+      },
+      "/tokyo/food-permit/:ward?": {
+        "path": "/tokyo/food-permit/:ward?",
+        "name": "東京都 飲食店営業許可 新規",
+        "url": "catalog.data.metro.tokyo.lg.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/lg/tokyo/food-permit",
+        "parameters": {
+          "ward": {
+            "description": "Ward; omit for all sources",
+            "options": [
+              {
+                "value": "shibuya",
+                "label": "渋谷区"
+              },
+              {
+                "value": "minato",
+                "label": "港区"
+              },
+              {
+                "value": "taito",
+                "label": "台東区"
+              },
+              {
+                "value": "shinagawa",
+                "label": "品川区"
+              },
+              {
+                "value": "setagaya",
+                "label": "世田谷区"
+              },
+              {
+                "value": "meguro",
+                "label": "目黒区"
+              }
+            ]
+          }
+        },
+        "description": "Newly granted food business permits (飲食店営業許可 etc.) in Tokyo wards, from each ward's CC BY open data:\n\n- 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month\n- 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first\n- 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)\n- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as `null`\n- 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)\n- 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)\n\nItems are sorted by permit date (`pubDate`). `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date`, `business_type`, `lat` / `lon` (when the publisher gives them, else `null`) and the publisher's original columns in `raw`. Only 許可 rows are included (届出 rows are skipped).\n\n| Query   | Description                           | Default |\n| ------- | ------------------------------------- | ------- |\n| `limit` | Number of permits per source, max 500 | 100     |",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false
+        },
+        "location": "tokyo/food-permit.ts",
+        "module": () => import('@/routes/lg/tokyo/food-permit.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Japan Local Government",
+    "url": "lg.jp",
+    "categories": [
+      "government"
+    ],
+    "description": "Local governments of Japan (`lg.jp`)",
+    "lang": "ja",
+    "ja": {
+      "name": "地方公共団体"
+    }
   },
   "lhratings": {
     "routes": {
@@ -92973,6 +93770,48 @@ export default {
     "name": "Odaily 星球日报",
     "url": "odaily.news",
     "lang": "zh-CN"
+  },
+  "odakyu": {
+    "routes": {
+      "/ridership": {
+        "path": "/ridership",
+        "name": "駅別乗降人員",
+        "url": "www.odakyu.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/odakyu/ridership",
+        "parameters": {},
+        "description": "Annual 1日平均駅別乗降人員 for every Odakyu station (小田原線 / 江ノ島線 / 多摩線), from [鉄道部門：駅別乗降人員・輸送人員ほか](https://www.odakyu.jp/company/railroad/users/). The operator publishes only the current fiscal year on this page, so there is no year parameter. One item per station; `_extra` carries `operator`, `station`, `line`, `fiscal_year`, `daily_average` (人/日), `rank` (順位 across all lines), `yoy_pct` (増減率) and the page's cell text in `raw`. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.odakyu.jp/company/railroad/users/"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/odakyu/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Odakyu Electric Railway",
+    "url": "www.odakyu.jp",
+    "description": "小田急電鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "小田急電鉄"
+    }
   },
   "oesw": {
     "routes": {
@@ -108480,6 +109319,51 @@ export default {
     "url": "www.solidot.org",
     "lang": "zh-CN"
   },
+  "sonomama": {
+    "routes": {
+      "/property/:pref?": {
+        "path": "/property/:pref?",
+        "name": "新着物件",
+        "url": "www.sonomama.net",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/sonomama/property/tokyo",
+        "parameters": {
+          "pref": "Prefecture slug (tokyo, kanagawa, saitama, chiba, osaka, kyoto, hyogo, aichi, fukuoka) or JIS X 0401 code; omit for nationwide"
+        },
+        "description": "New listings on 店舗そのままオークション，newest first (first page, 20 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，階，最寄駅，敷金・保証金，造作価格，業態，業種制限，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 20 | 20      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.sonomama.net/app/",
+              "www.sonomama.net/"
+            ],
+            "target": "/property"
+          }
+        ],
+        "location": "property.ts",
+        "module": () => import('@/routes/sonomama/property.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Sonomama",
+    "url": "www.sonomama.net",
+    "description": "店舗そのままオークション — 居抜き店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "店舗そのままオークション"
+    }
+  },
   "sony": {
     "routes": {
       "/downloads/:productType/:productId": {
@@ -113150,6 +114034,306 @@ export default {
     "url": "t.me",
     "lang": "en"
   },
+  "temponw": {
+    "routes": {
+      "/estates/:area?": {
+        "path": "/estates/:area?",
+        "name": "新着物件",
+        "url": "www.temponw.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/temponw/estates/tokyo",
+        "parameters": {
+          "area": {
+            "description": "`tokyo` for the 23 wards of Tokyo; omit for nationwide",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京23区"
+              }
+            ]
+          }
+        },
+        "description": "Listings on 店舗ネットワーク sorted by 新着順 (first two pages, 20 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，階，最寄駅，保証金，礼金，造作譲渡料，不可業態，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`; the same unit may be listed by several agencies under different ids.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.temponw.com/result",
+              "www.temponw.com/"
+            ],
+            "target": "/estates"
+          }
+        ],
+        "location": "estates.ts",
+        "module": () => import('@/routes/temponw/estates.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Temponw",
+    "url": "www.temponw.com",
+    "description": "店舗ネットワーク — 貸店舗・テナント物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "店舗ネットワーク"
+    }
+  },
+  "temposmart": {
+    "routes": {
+      "/estates/:pref?": {
+        "path": "/estates/:pref?",
+        "name": "新着物件",
+        "url": "www.temposmart.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/temposmart/estates/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug or JIS X 0401 code",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (13)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (14)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (11)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (12)"
+              },
+              {
+                "value": "osaka",
+                "label": "大阪府 (27)"
+              },
+              {
+                "value": "kyoto",
+                "label": "京都府 (26)"
+              },
+              {
+                "value": "hyogo",
+                "label": "兵庫県 (28)"
+              }
+            ]
+          }
+        },
+        "description": "New listings on テンポスマート for one prefecture, sorted by 新着順 (first page, 50 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作譲渡料，現況，業種制限，登録日，…) parsed from the list and detail pages; unknown values are `null`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 50 | 30      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.temposmart.jp/estates/pref/:pref"
+            ],
+            "target": "/estates/:pref"
+          }
+        ],
+        "location": "estates.ts",
+        "module": () => import('@/routes/temposmart/estates.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Temposmart",
+    "url": "www.temposmart.jp",
+    "description": "テンポスマート — 飲食店向け居抜き・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "テンポスマート"
+    }
+  },
+  "tenant-shop": {
+    "routes": {
+      "/chintai/:pref?/:type?": {
+        "path": "/chintai/:pref?/:type?",
+        "name": "新着物件",
+        "url": "www.tenant-shop.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/tenant-shop/chintai/tokyo/food",
+        "parameters": {
+          "pref": {
+            "description": "Prefecture slug or the site's `pa` code",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (14)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (15)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (16)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (17)"
+              },
+              {
+                "value": "ibaraki",
+                "label": "茨城県 (18)"
+              },
+              {
+                "value": "tochigi",
+                "label": "栃木県 (19)"
+              },
+              {
+                "value": "gunma",
+                "label": "群馬県 (20)"
+              },
+              {
+                "value": "hokkaido",
+                "label": "北海道 (7)"
+              },
+              {
+                "value": "miyagi",
+                "label": "宮城県 (10)"
+              },
+              {
+                "value": "niigata",
+                "label": "新潟県 (21)"
+              },
+              {
+                "value": "nagano",
+                "label": "長野県 (28)"
+              },
+              {
+                "value": "aichi",
+                "label": "愛知県 (25)"
+              },
+              {
+                "value": "gifu",
+                "label": "岐阜県 (26)"
+              },
+              {
+                "value": "shizuoka",
+                "label": "静岡県 (27)"
+              },
+              {
+                "value": "osaka",
+                "label": "大阪府 (1)"
+              },
+              {
+                "value": "kyoto",
+                "label": "京都府 (31)"
+              },
+              {
+                "value": "hyogo",
+                "label": "兵庫県 (32)"
+              },
+              {
+                "value": "shiga",
+                "label": "滋賀県 (5)"
+              },
+              {
+                "value": "nara",
+                "label": "奈良県 (34)"
+              }
+            ]
+          },
+          "type": {
+            "description": "Property type filter; omit for all types",
+            "options": [
+              {
+                "value": "inuki",
+                "label": "居抜き"
+              },
+              {
+                "value": "food",
+                "label": "飲食"
+              },
+              {
+                "value": "office",
+                "label": "オフィス"
+              },
+              {
+                "value": "retail",
+                "label": "物販・サービス"
+              },
+              {
+                "value": "warehouse",
+                "label": "倉庫・工場"
+              },
+              {
+                "value": "beauty",
+                "label": "美容・エステ・医療"
+              },
+              {
+                "value": "roadside",
+                "label": "沿道サービス・借地"
+              },
+              {
+                "value": "mall",
+                "label": "商業施設"
+              }
+            ]
+          }
+        },
+        "description": "New listings (新着物件) on テナントショップネットワーク for one prefecture, newest first (first page, 30 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金・敷金，礼金，物件登録日，…) parsed from the list and detail pages; unknown values are `null`. East Japan prefectures are served by tenant-shop.com and 愛知 and westward by tenant-shop.jp.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 30 | 30      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tenant-shop.com/chintai_biz/pa-:pa/shin-1",
+              "www.tenant-shop.com/chintai_biz/pa-:pa"
+            ],
+            "target": "/chintai/:pa"
+          },
+          {
+            "source": [
+              "www.tenant-shop.jp/chintai_biz/pa-:pa/shin-1",
+              "www.tenant-shop.jp/chintai_biz/pa-:pa"
+            ],
+            "target": "/chintai/:pa"
+          }
+        ],
+        "location": "chintai.ts",
+        "module": () => import('@/routes/tenant-shop/chintai.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Tenant Shop Network",
+    "url": "www.tenant-shop.com",
+    "description": "テナントショップネットワーク — 貸店舗・貸事務所・居抜き物件情報サイト（東日本は tenant-shop.com、愛知以西は tenant-shop.jp）",
+    "lang": "ja",
+    "ja": {
+      "name": "テナントショップネットワーク"
+    }
+  },
   "tencent": {
     "routes": {
       "/pvp/newsindex/:type": {
@@ -114952,6 +116136,99 @@ export default {
     "url": "tokeninsight.com",
     "description": "::: tip\nTokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.\n:::",
     "lang": "en"
+  },
+  "tokyometro": {
+    "routes": {
+      "/ridership/:year?": {
+        "path": "/ridership/:year?",
+        "name": "各駅の乗降人員ランキング",
+        "url": "www.tokyometro.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/tokyometro/ridership",
+        "parameters": {
+          "year": {
+            "description": "Fiscal year (`2020` … latest); omit for the latest year"
+          }
+        },
+        "description": "Annual 駅別乗降人員 (one-day average) for every Tokyo Metro station, from [各駅の乗降人員ランキング](https://www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/index.html). One item per station and fiscal year; `_extra` carries `operator`, `station`, `line` (several lines joined with `・`), `fiscal_year`, `daily_average` (人/日), `rank`, `yoy_pct` and the page's cell text in `raw`. Stations in the 直通連絡駅・共用駅 table (渋谷, 北千住, 中目黒, …) have no rank because the operator does not rank them. 国会議事堂前 and 溜池山王 are listed as one station (国会・溜池), as on the page. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/:page"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/tokyometro/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Tokyo Metro",
+    "url": "www.tokyometro.jp",
+    "description": "東京メトロ — 東京地下鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "東京メトロ"
+    }
+  },
+  "tokyu": {
+    "routes": {
+      "/ridership/:year?": {
+        "path": "/ridership/:year?",
+        "name": "駅別乗降人員",
+        "url": "www.tokyu.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/tokyu/ridership",
+        "parameters": {
+          "year": {
+            "description": "Fiscal year (`2014` … latest); omit for the latest year"
+          }
+        },
+        "description": "Annual 駅別乗降人員 (one-day average) for every Tokyu station, from [駅別乗降人員・輸送人員](https://www.tokyu.co.jp/railway/company/business/passengers/). One item per station, line and fiscal year (渋谷, 日吉, 蒲田 … appear once per line, as on the page); `_extra` carries `operator`, `station`, `line`, `fiscal_year`, `daily_average` (計, 人/日), `yoy_pct` and the page's cell text in `raw` (定期 / 定期外 / 計 / 前年比 / previous-year figure). `rank` is `null` because the operator publishes no ranking. 世田谷線 is published as a single 全線 figure and is not included. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tokyu.co.jp/railway/company/business/passengers/:year",
+              "www.tokyu.co.jp/railway/company/business/passengers/"
+            ],
+            "target": "/ridership/:year"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/tokyu/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Tokyu Railways",
+    "url": "www.tokyu.co.jp",
+    "description": "東急電鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "東急電鉄"
+    }
   },
   "tongli": {
     "routes": {
